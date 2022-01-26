@@ -39,6 +39,7 @@ const game = {
         team2: 6.5,
     },
 };
+
 /*
 //Task 1
 const [players1, players2] = game.players;
@@ -124,6 +125,40 @@ for (const player of game.scored) {
 console.log(scorers);
 */
 
+const gameEvents = new Map([ 
+    [17, '⚽ GOAL'],
+    [36, '🔁 Substitution'],
+    [47, '⚽ GOAL'],
+    [61, '🔁 Substitution'],
+    [64, '🔶 Yellow card'],
+    [69, '🔴 Red card'],
+    [70, '🔁 Substitution'],
+    [72, '🔁 Substitution'],
+    [76, '⚽ GOAL'], 
+    [80, '⚽ GOAL'],
+    [92, '🔶 Yellow card']
+]);
 
+//Task 1
 
+const events = [...new Set (gameEvents.values())];
+console.log(events)
+
+//Task 2
+
+gameEvents.delete(64);
+console.log(gameEvents);
+
+//Task 3
+
+const lengthOfGame = 90
+const averageEvent = lengthOfGame / gameEvents.size
+console.log(`An event happened, on average, every ${averageEvent} minutes"`);
+
+//Task 4
+
+for (const [key, value] of gameEvents) {
+    console.log(key <= 45 ? `[FIRST HALF] ${key}: ${value}` : 
+    `[SECOND HALF] ${key}: ${value}`)
+}
 
