@@ -142,23 +142,23 @@ const gameEvents = new Map([
 //Task 1
 
 const events = [...new Set (gameEvents.values())];
-console.log(events)
+//console.log(events)
 
 //Task 2
 
 gameEvents.delete(64);
-console.log(gameEvents);
+//console.log(gameEvents);
 
 //Task 3
 
 const lengthOfGame = 90
 const averageEvent = lengthOfGame / gameEvents.size
-console.log(`An event happened, on average, every ${averageEvent} minutes"`);
+//console.log(`An event happened, on average, every ${averageEvent} minutes"`);
 
 //Task 4
-
+/*
 for (const [key, value] of gameEvents) {
     console.log(key <= 45 ? `[FIRST HALF] ${key}: ${value}` : 
     `[SECOND HALF] ${key}: ${value}`)
 }
-
+*/
