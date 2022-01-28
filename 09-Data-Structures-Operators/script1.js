@@ -7,7 +7,7 @@ const flights =
 //Strings Part 1
 const airline = 'TAP Air Portugal'
 const plane = 'A320'
-
+/*
 console.log(plane[0])
 console.log(plane[1])
 console.log(plane[2])
@@ -27,9 +27,40 @@ console.log(airline.slice(4, 7))
 console.log(airline.slice(0, airline.indexOf(' ')))
 console.log(airline.slice(airline.lastIndexOf(' ')+1))
 
+console.log(airline.slice(-2));
+console.log(airline.slice(1, -2));
 
+const checkMiddleSeat = function (seat) {
+  // B and E are middle seats
+ const s = seat.slice(-1);
+ if (s === 'B' || s === 'E')
+console.log('You got the middle seat')
+  else 
+   console.log('You got Lucky')
+};
 
+checkMiddleSeat('11B');
+checkMiddleSeat('12A')
+checkMiddleSeat('9E')
 
+console.log(new String ('clare'))
+console.log(typeof new String('clare'))
+*/
+
+//Part 2
+
+console.log(airline.toLowerCase())
+console.log(airline.toUpperCase())
+
+const passengerCorrect = function (passenger) {
+  const passengerLower = passenger.toLowerCase()
+  const passengerCorrect = passengerLower[0].toUpperCase() + passengerLower.slice(1);
+console.log(passengerCorrect)
+}
+
+passengerCorrect('jOnAS')
+passengerCorrect('CLARE')
+passengerCorrect('RIchaRD')
 
 
 
