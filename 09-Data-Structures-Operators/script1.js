@@ -62,6 +62,66 @@ passengerCorrect('jOnAS')
 passengerCorrect('CLARE')
 passengerCorrect('RIchaRD')
 
+//comparing emails
+const email ='hello@jonas.io'
+
+const loginEmail = '  Hello@Jonas.Io \n'
+//long method to trim an email 
+const lowerEmail = loginEmail.toLowerCase()
+const trimmedEmail = lowerEmail.trim();
+console.log(trimmedEmail)
+
+//short version to trim an email
+const normalisedEmail = loginEmail.toLocaleLowerCase().trim()
+console.log(normalisedEmail)
+
+console.log(email === normalisedEmail)
+
+//Replacing parts of strings
+
+const priceGB = '288,97£'
+const priceUS = priceGB.replace('£', '$').replace(',', '.')
+console.log(priceUS)
+
+//Replacing words in a string
+
+const announcement = 'All passengers come to boarding door 23. Boarding door 23!'
+
+console.log(announcement.replaceAll('door', 'gate'))
+
+//regex
+console.log(announcement.replace(/door/g, 'gate'))
+
+//Booleans
+
+const planeNew = 'A320neo'
+console.log(planeNew.includes('A320'))
+console.log(planeNew.includes('B230'))
+
+console.log(planeNew.startsWith('A3'))
+console.log(planeNew.startsWith('B'))
+
+console.log(planeNew.endsWith('o'))
+console.log(plane.endsWith('t'))
+
+const planeAir = 'Airbus A320neo'
+
+if (planeAir.startsWith('Air') && planeAir.endsWith('neo')) {
+  console.log('Part of the new Airbus family')
+}
+
+const checkBaggage = function(items) {
+  const baggage = items.toLowerCase()
+  if (baggage.includes('knife') || baggage.includes('gun')) {
+    console.log('You are not allowed on board')
+  } else {
+    console.log('Welcome Aboard')
+  }
+}
+
+checkBaggage('I have a laptop, some Food and a KNIFE')
+checkBaggage('Socks and Camera')
+checkBaggage('Got some snacks and a Gun for protection')
 
 
 
