@@ -45,7 +45,7 @@ checkMiddleSeat('9E')
 
 console.log(new String ('clare'))
 console.log(typeof new String('clare'))
-*/
+
 
 //Part 2
 
@@ -123,19 +123,56 @@ checkBaggage('I have a laptop, some Food and a KNIFE')
 checkBaggage('Socks and Camera')
 checkBaggage('Got some snacks and a Gun for protection')
 
+//split and join methods
+
+console.log('a+very+nice+string'.split('+'))
+
+console.log('Clare Coates'.split(' '))
+
+//destructuring
+const [firstName, lastName] = 'Clare Coates'.split(' ')
+
+const newName = ['Mrs.', firstName, lastName.toUpperCase()].join(' ')
+console.log(newName)
+
+const capitaliseName = function (name) {
+  const names = name.split(' ')
+  const namesUpper = []
+
+  for (const n of names) {
+    namesUpper.push(n[0].toUpperCase() + n.slice(1))
+  }
+  console.log(namesUpper.join(' '))
+}
+
+capitaliseName('jessica ann smith davis')
+capitaliseName('clare elizabeth coates')
+
+//Padding
+
+const message = 'Go to Gate 23!'
+console.log(message.padStart(30
+  , '+').padEnd(40, '+'))
+
+//real world example of masking
+
+const maskCreditCard = function (number) {
+  const str = number + ''
+  const last = str.slice(-4)
+  return last.padStart(str.length, '*')
+}
+
+console.log(maskCreditCard(4111567811234786))
+console.log(maskCreditCard('3120145628895451'))
+
+const message2 = 'Bad weather.....All Departures Delayed.... '
+console.log(message2.repeat(5))
 
 
 
 
 
-
-
-
-
-
-
-
-
+*/
 /*
 //Enhanced Object Literals
 const weekdays = ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'];
