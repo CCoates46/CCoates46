@@ -161,7 +161,7 @@ for (const [key, value] of gameEvents) {
     console.log(key <= 45 ? `[FIRST HALF] ${key}: ${value}` : 
     `[SECOND HALF] ${key}: ${value}`)
 }
-*/
+
 
 //Coding Challenge 4
 document.body.append(document.createElement('textarea'));
@@ -181,7 +181,7 @@ document.querySelector('button').addEventListener('click', function () {
     console.log(`${output.padEnd(20)}${'✅'.repeat(i + 1)}`)
    }
 })
-
+*/
 
 
 
