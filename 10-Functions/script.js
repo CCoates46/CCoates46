@@ -105,9 +105,75 @@ greeterHey('Jonas')
 greeterHey('Clare')
 
 greet('Hello')('Clare')
-*/
+
 const greet = greeting => name => 
         console.log(`${greeting} ${name}`)
 
 
 greet('Hello')('Clare')
+*/
+
+//The Call and Apply Methods
+
+const lufthansa = {
+    airline: 'Lufthansa',
+    iataCode: 'LH',
+    bookings: [],
+    book (flightNum, name){
+        console.log(`${name} has booked a seat on ${this.airline} ${this.iataCode}${flightNum}`)
+    this.bookings.push({flight: `${this.iataCode}${flightNum}`, name})
+    }
+}
+
+lufthansa.book(235, 'Clare Coates')
+lufthansa.book(635, 'John Smith')
+console.log(lufthansa)
+
+const euroWings = {
+    airline: 'EuroWings',
+    iataCode: 'EW',
+    bookings: []
+}
+
+const book = lufthansa.book
+
+//This does NOT work
+//book(23, 'Sarah Williams')
+
+//CALL Method
+book.call(euroWings, 23, 'Sarah Williams')
+console.log(euroWings)
+
+book.call(lufthansa, 239, 'Mary Cooper')
+//console.log(lufthansa)
+
+//APPLY method
+
+const flightData = [583, 'George Cooper']
+//book.apply(euroWings, flightData)
+//console.log(euroWings)
+
+book.call(euroWings, ...flightData)
+console.log(euroWings)
+
+//BIND method
+
+const bookEW = book.bind(euroWings)
+bookEW(23, 'Steven Williams')
+console.log(euroWings)
+
+const bookEW23 = book.bind(euroWings, 23)
+bookEW23('Clare Coates')
+bookEW23('Richard Coates')
+
+//Add event Listeners
+
+lufthansa.planes = 300
+lufthansa.buyPlane = function () {
+    console.log(this)
+
+    this.planes++
+    console.log(this.planes)
+}
+
+document.querySelector('.buy').addEventListener('click', lufthansa.buyPlane)
