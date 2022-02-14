@@ -119,9 +119,9 @@ const lufthansa = {
     airline: 'Lufthansa',
     iataCode: 'LH',
     bookings: [],
-    book (flightNum, name){
+    book(flightNum, name) {
         console.log(`${name} has booked a seat on ${this.airline} ${this.iataCode}${flightNum}`)
-    this.bookings.push({flight: `${this.iataCode}${flightNum}`, name})
+        this.bookings.push({ flight: `${this.iataCode}${flightNum}`, name })
     }
 }
 
@@ -176,4 +176,21 @@ lufthansa.buyPlane = function () {
     console.log(this.planes)
 }
 
-document.querySelector('.buy').addEventListener('click', lufthansa.buyPlane)
+//lufthansa.buyPlane()
+
+document.querySelector('.buy').addEventListener('click', lufthansa.buyPlane.bind(lufthansa))
+
+//Partial Application
+
+//const addTax = (rate, value) => value + value * rate
+//console.log(addTax(0.1, 200))
+
+//const addVAT = addTax.bind(null, 0.23)
+//console.log(addVAT (100))
+
+const newTax = (rate) => (value) =>
+      value + value * rate
+
+const returnTax = newTax(0.23)
+console.log(returnTax(100))
+console.log(returnTax(23))
