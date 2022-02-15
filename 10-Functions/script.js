@@ -111,7 +111,7 @@ const greet = greeting => name =>
 
 
 greet('Hello')('Clare')
-*/
+
 
 //The Call and Apply Methods
 
@@ -194,3 +194,4 @@ const newTax = (rate) => (value) =>
 const returnTax = newTax(0.23)
 console.log(returnTax(100))
 console.log(returnTax(23))
+*/
