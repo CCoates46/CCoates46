@@ -194,4 +194,41 @@ const newTax = (rate) => (value) =>
 const returnTax = newTax(0.23)
 console.log(returnTax(100))
 console.log(returnTax(23))
+
+
+//IIFE
+const runOnce = function () {
+    console.log('This will never run again')
+}
+runOnce();
+
+(function () {
+    console.log('This will never run again')
+})()
+
+//Scope Chain
+{
+    let isPrivate = 23
+    //var isPublic = 46
+}
+
+console.log(isPrivate)
+//console.log(isPublic)
 */
+
+const secureBooking = function () {
+    let passengerCount = 0
+
+    return function () {
+        passengerCount++
+        console.log(`${passengerCount} passengers`)
+    }
+}
+
+const booker = secureBooking()
+
+booker()
+booker()
+booker()
+
+console.dir(booker)

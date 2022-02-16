@@ -1,4 +1,5 @@
 'use strict'
+/*
 const poll = {
     question: "What is your favourite programming language?",
     options: ["0: JavaScript", "1: Python", "2: Rust", "3: C++"],
@@ -35,3 +36,10 @@ const poll = {
 //poll.registerNewAnswer();
 
 document.querySelector('.poll').addEventListener('click', poll.registerNewAnswer.bind(poll))
+
+//Test Data1: [5, 2, 3]
+//Test Data2: [1, 5, 3, 9, 6, 1]
+
+poll.displayResults.call({answers: [5, 2, 3]}, 'string')
+poll.displayResults.call({answers: [1, 5, 3, 9, 6, 1]}, 'string')
+*/
