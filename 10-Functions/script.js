@@ -214,7 +214,7 @@ runOnce();
 
 console.log(isPrivate)
 //console.log(isPublic)
-*/
+
 
 const secureBooking = function () {
     let passengerCount = 0
@@ -232,3 +232,46 @@ booker()
 booker()
 
 console.dir(booker)
+
+
+//Example 1
+
+let f
+    
+const g = function () {
+    const a = 23
+    f = function () {
+        console.log(a * 2)
+    }
+}
+
+const h = function () {
+    const b = 777
+    f = function (){
+        console.log(b * 2)
+    }
+}
+
+g()
+f()
+console.dir(f)
+h()
+f()
+ console.dir(f)
+ 
+
+//Example 2
+
+const boardPassengers = (n, wait) => {
+    const perGroup = n / 3
+
+    setTimeout(() => {
+        console.log(`We are now boarding all ${n} passengers`)
+        console.log(`There are 3 groups, each with ${perGroup} passengers`)
+    }, 1000);
+    console.log(`We will now start boarding in ${wait} seconds`)
+}
+
+boardPassengers(180, 3)
+boardPassengers(321, 5)
+*/
