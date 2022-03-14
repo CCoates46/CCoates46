@@ -13,7 +13,7 @@ So create a shallow copy of Julia's array, and remove the cat ages from that cop
 is an adult, and is 5 years old") or a puppy ("Dog number 2 is still a puppy   ")
 4. Run the function for both test data sets
 
-*/
+
 
 //Test data:
 //Test Data 1: Julia's data [3, 5, 2, 12, 7], Kate's data [4, 1, 15, 8, 3] 
@@ -21,8 +21,21 @@ is an adult, and is 5 years old") or a puppy ("Dog number 2 is still a puppy   "
 
 
 const checkDogs = function (dogsJulia, dogsKate){
-
+    const dogsJuliaCorrected = dogsJulia.slice()
+    dogsJuliaCorrected.splice(0, 1)
+    dogsJuliaCorrected.splice(-2)
+    const concatDogs = dogsJuliaCorrected.concat(dogsKate)
+    
+    concatDogs.forEach(function(dogs, i){
+        if(dogs >= 3) {
+            console.log(`Dog number ${i + 1} is an adult, and is ${dogs} years old`)
+        } else {
+            console.log(`Dog number ${i + 1} is still a puppy 🐶`)
+        }
+    })
 
 }
 
-checkDogs()
+checkDogs([3, 5, 2, 12, 7], [4, 1, 15, 8, 3])
+checkDogs([9, 16, 6, 8, 3], [10, 5, 6, 1, 4] )
+*/
