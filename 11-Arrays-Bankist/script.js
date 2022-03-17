@@ -73,7 +73,7 @@ const displayMovements = function (movements){
     const html = `
     <div class="movements__row">
        <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
-       <div class="movements__value">${mov}</div>
+       <div class="movements__value">${mov}€</div>
   </div> `
    
   //this adds the html to the page
@@ -96,6 +96,32 @@ const createUsernames = function (accs){
 createUsernames(accounts)
 console.log(accounts)
 
+const calcDisplayBalance = function(movements) {
+  const balance = movements.reduce((acc, mov) => acc + mov
+  , 0)
+  labelBalance.textContent = `${balance}€`
+}
+
+calcDisplayBalance(account1.movements)
+
+const calcSummary = function(movements) {
+  const income = movements.filter(mov => mov > 0).reduce((acc, mov) => acc + mov, 0)
+  labelSumIn.textContent = `${income}€`
+
+  const outgoings = movements.filter(mov => mov < 0)
+  .reduce((acc, mov) => acc + mov, 0)
+  labelSumOut.textContent = `${Math.abs(outgoings)}€`
+
+
+const interest = movements.filter(mov => mov > 0)
+.map(deposit => deposit * 1.2/100)
+.filter(int => int >= 1)
+.reduce((acc, int) => acc + int, 0)
+ labelSumInterest.textContent = `${interest}€`
+}
+calcSummary (account1.movements)
+
+
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -106,15 +132,15 @@ const currencies = new Map([
   ['EUR', 'Euro'],
   ['GBP', 'Pound sterling'],
 ]);
-
+*/
 //const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 
-
+/*
 //SLICE
 let arr = ['a', 'b', 'c', 'd', 'e']
-/*
+
 console.log(arr.slice(2))
 console.log(arr.slice(2, 4))
 console.log(arr.slice(-2))
@@ -218,4 +244,48 @@ const movementsString = movements.map(
 `Movement ${i + 1}: You ${mov > 0 ? 'deposited' : 'withdrew'} ${Math.abs(mov)}`
 )
 console.log(movementsString)
+
+
+//Filter method
+
+const deposits = movements.filter(mov => mov > 0)
+console.log(deposits)
+
+const depositsNew = []
+for( const mov of movements) {
+  if (mov > 0)
+depositsNew.push(mov)
+}
+console.log(depositsNew)
+
+const withdrawals = movements.filter(mov => mov < 0)
+console.log(withdrawals)
+
+//Reduce Method
+
+const balance = movements.reduce(function (acc, cur, i, arr)
+{
+  console.log(`Iteration ${i}: ${acc}`)
+  return acc + cur
+
+}, 0)
+
+console.log(balance)
+
+let balance2 = 0
+for (const mov of movements) balance2 += mov
+console.log(balance2)
+
+const max = movements.reduce((acc, mov) => acc > mov ? acc : mov, movements[0])
+console.log(max)
+
+const eurToUsd = 1.1
+
+const totalDepositsUSD = 
+movements.filter((mov) => mov > 0)
+.map((mov)=> mov * eurToUsd)
+.reduce((acc,mov) => acc + mov, 0)
+
+console.log(totalDepositsUSD)
+
 */
