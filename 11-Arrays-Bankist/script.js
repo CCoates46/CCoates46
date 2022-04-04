@@ -61,66 +61,171 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-const displayMovements = function (movements){
+const displayMovements = function (movements, sort = false) {
   //this empty's the container
   containerMovements.innerHTML = ''
   //this is the loop
-  movements.forEach(function(mov,i) {
+
+  const movs = sort ? movements.slice().sort((a, b) =>
+    a - b) : movements
+  movs.forEach(function (mov, i) {
     //here we need to create a ternary operator to work out type
     const type = mov > 0 ? 'deposit' : 'withdrawal'
 
-   //this is the html we need to insert
+    //this is the html we need to insert
     const html = `
     <div class="movements__row">
        <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
        <div class="movements__value">${mov}€</div>
   </div> `
-   
-  //this adds the html to the page
-  containerMovements.insertAdjacentHTML('afterbegin', html)
+
+    //this adds the html to the page
+    containerMovements.insertAdjacentHTML('afterbegin', html)
   })
 }
 
 //calling the function
-displayMovements(account1.movements)
 
-const createUsernames = function (accs){
-  accs.forEach(function(acc) {
-  acc.username = acc.owner
-.toLowerCase()
-.split(' ')
-.map(name => name[0])
-.join('')
-})
+//displayMovements(account1.movements)
+
+const createUsernames = function (accs) {
+  accs.forEach(function (acc) {
+    acc.username = acc.owner
+      .toLowerCase()
+      .split(' ')
+      .map(name => name[0])
+      .join('')
+  })
 }
 createUsernames(accounts)
-console.log(accounts)
 
-const calcDisplayBalance = function(movements) {
-  const balance = movements.reduce((acc, mov) => acc + mov
-  , 0)
-  labelBalance.textContent = `${balance}€`
+const updateUI = function (acc) {
+  //Display movements
+  displayMovements(acc.movements)
+  //Display and calc balance
+  calcDisplayBalance(acc)
+  //Display and calc summary
+  calcDisplaySummary(acc)
 }
 
-calcDisplayBalance(account1.movements)
+console.log(accounts)
+const calcDisplayBalance = function (acc) {
+  acc.balance = acc.movements.reduce((acc, mov) => acc + mov
+    , 0)
+  labelBalance.textContent = `${acc.balance}€`
+}
 
-const calcSummary = function(movements) {
-  const income = movements.filter(mov => mov > 0).reduce((acc, mov) => acc + mov, 0)
+//calcDisplayBalance(account1.movements)
+
+const calcDisplaySummary = function (acc) {
+  const income = acc.movements.filter(mov => mov > 0).reduce((acc, mov) => acc + mov, 0)
   labelSumIn.textContent = `${income}€`
 
-  const outgoings = movements.filter(mov => mov < 0)
-  .reduce((acc, mov) => acc + mov, 0)
+  const outgoings = acc.movements.filter(mov => mov < 0)
+    .reduce((acc, mov) => acc + mov, 0)
   labelSumOut.textContent = `${Math.abs(outgoings)}€`
 
 
-const interest = movements.filter(mov => mov > 0)
-.map(deposit => deposit * 1.2/100)
-.filter(int => int >= 1)
-.reduce((acc, int) => acc + int, 0)
- labelSumInterest.textContent = `${interest}€`
+  const interest = acc.movements.filter(mov => mov > 0)
+    .map(deposit => deposit * acc.interestRate / 100)
+    .filter(int => int >= 1)
+    .reduce((acc, int) => acc + int, 0)
+  labelSumInterest.textContent = `${interest}€`
 }
-calcSummary (account1.movements)
+//calcSummary (account1.movements)
 
+
+//event handler
+let currentAccount
+
+btnLogin.addEventListener('click', function (e) {
+
+  //prevent page from submitting
+  e.preventDefault()
+
+  currentAccount = accounts.find(
+    acc => acc.username === inputLoginUsername.value.toLowerCase()
+  )
+  console.log(currentAccount)
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    //Dispay UI and message
+
+    labelWelcome.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]
+      }`
+    containerApp.style.opacity = 100
+
+    // Clear Input fields
+    inputLoginUsername.value = inputLoginPin.value = ''
+    inputLoginPin.blur()
+
+    // Update UI
+    updateUI(currentAccount)
+  }
+})
+
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault()
+
+  const amount = Number(inputLoanAmount.value)
+
+  if (amount > 0 && currentAccount.movements.some(mov =>
+    mov >= amount * 0.1)) {
+
+    //Add movement
+    currentAccount.movements.push(amount)
+
+    //update UI
+    updateUI(currentAccount)
+  }
+  inputLoanAmount.value = ''
+})
+
+btnClose.addEventListener('click', function (e) {
+  e.preventDefault()
+
+  if (inputCloseUsername.value.toLowerCase() === currentAccount.username &&
+    Number(inputClosePin.value) === currentAccount.pin) {
+    const index = accounts.findIndex(
+      acc => acc.username === currentAccount.username
+    )
+    console.log(index)
+    // delete the account
+    accounts.splice(index, 1)
+    console.log(accounts)
+    // hide the UI    
+    containerApp.style.opacity = 0
+    //clear input fields
+    inputCloseUsername.value = inputClosePin.value = ''
+  }
+})
+
+// sort
+let sorted = false
+btnSort.addEventListener('click', function (e) {
+  e.preventDefault()
+  displayMovements(currentAccount.movements, !sorted)
+  sorted = !sorted
+})
+
+
+//Transfers
+btnTransfer.addEventListener('click', function (e) {
+  e.preventDefault()
+  const amount = Number(inputTransferAmount.value)
+  const receiverAcc = accounts.find(
+    acc => acc.username === inputTransferTo.value)
+  inputTransferAmount.value = inputTransferTo.value = ''
+
+  if (
+    amount > 0 &&
+    receiverAcc &&
+    currentAccount.balance >= amount &&
+    receiverAcc?.username !== currentAccount.username) {
+    currentAccount.movements.push(-amount)
+    receiverAcc.movements.push(amount)
+    updateUI(currentAccount)
+  }
+})
 
 
 /////////////////////////////////////////////////
@@ -288,4 +393,160 @@ movements.filter((mov) => mov > 0)
 
 console.log(totalDepositsUSD)
 
+
+const account = accounts.find(acc => acc.owner === "Jessica Davis")
+console.log(account)
+
+const accountNew = []
+for (const acc of accounts) {
+  if (acc.owner === "Jessica Davis")
+  accountNew.push(acc)
+}
+console.log(accountNew)
+
+
+//Include method
+console.log(movements)
+console.log(movements.includes(-130))
+
+//Some method
+
+const anyDeposits = movements.some(mov => mov > 5000)
+console.log(anyDeposits)
+
+
+//Every method
+console.log(movements.every(mov => mov > 0))
+
+console.log(account4.movements.every(mov => mov > 0))
+
+
+//Flat method
+
+const arr = [ [1, 2, 3], [4, 5, 6], 7, 8]
+console.log(arr.flat())
+
+const arrDeep = [[[1,2], 3], [4, [5, 6]], 7, 8]
+console.log(arrDeep.flat(2))
+
+const accountMovements = accounts.map(acc => acc.movements)
+console.log(accountMovements)
+const allMovements = accountMovements.flat()
+console.log(allMovements)
+const overallBalance = allMovements.reduce((acc, mov) => acc + mov, 0)
+console.log(overallBalance)
+
+//SORT method with strings
+
+const owners = ['Jonas', 'Zach', 'Martha', 'Adam']
+console.log(owners.sort())
+
+//SORT method with numbers
+
+console.log(movements)
+console.log(movements.sort())
+
+// return < 0, A, B (keep order)
+// return > 0, B, A (switch order)
+
+// Ascending order
+/*
+movements.sort((a,b) => {
+  if (a > b) return 1
+  if (a < b) return -1
+})
+
+console.log(`Ascending order:  ${movements}`)
+
+// Descending order
+
+movements.sort((a,b) => {
+  if (a > b) return -1
+  if (a < b) return 1
+})
+
+console.log(`Descending order: ${movements}`)
+
+movements.sort(( a, b ) => a - b)
+console.log(`Ascending order:  ${movements}`)
+
+movements.sort((a,b) => b - a)
+console.log(`Descending order: ${movements}`)
+
+// empty + fill method
+const x = new Array(7)
+
+x.fill(1, 3, 5)
+console.log(x)
+
+const arr = [1, 2, 3, 4, 5, 6, 7]
+arr.fill(23, 3, 6)
+console.log(arr)
+
+const y = Array.from({ length: 7 }, () => 1)
+console.log(y)
+
+const z = Array.from({ length: 7 }, (_, i) => i + 1)
+console.log(z)
+
+const randomDice = Array.from({ length: 100 }, () => Math.floor(Math.random() * 6) + 1)
+console.log(randomDice)
+
+labelBalance.addEventListener('click', function () {
+  const movementsUI = Array.from(
+    document.querySelectorAll('.movements__value'),
+    el => Number(el.textContent.replace('€', '')
+  ))
+  console.log(movementsUI)
+})
+
+const bankDepositSum = accounts
+.flatMap(acc => acc.movements)
+.filter(acc => acc > 0)
+.reduce((sum, acc) => sum + acc, 0 )
+
+console.log(bankDepositSum)
+
+const numDeposits = accounts
+.flatMap(acc => acc.movements)
+.filter(mov => mov >= 1000).length
+
+console.log(numDeposits)
+
+
+const numDeposits2 = accounts
+.flatMap(acc => acc.movements)
+.reduce((count, cur) => (cur >= 1000 ? ++count : count), 0) 
+console.log(numDeposits2)
+
+const sums = accounts
+.flatMap(acc => acc.movements)
+.reduce(
+  (sums, cur) => {
+   sums[cur > 0 ? 'deposits' : 'withdrawals'] += cur
+  //cur > 0 ? (sums.deposits += cur) : (sums.withdrawals += cur)
+  return sums
+},
+{ deposits: 0 , withdrawals: 0 }
+)
+console.log(sums)
+
+const convertTitleCase = function (title) {
+  const capitalise = str => str[0]
+  .toUpperCase() + str.slice(1)
+  
+  const exceptions = ['a', 'an', 'and','the', 'but', 'or', 'on', 'in', 'with']
+
+  const titleCase = title
+  .toLowerCase()
+  .split(' ')
+  .map(word => 
+    (exceptions.includes(word) ? word : capitalise(word)))
+    .join(' ')
+    return capitalise(titleCase)
+}
+
+console.log(convertTitleCase('this is a nice new title'))
+console.log(convertTitleCase('this is a LONG title but not too long'))
+console.log(convertTitleCase('and here is another title with an EXAMPLE'))
 */
