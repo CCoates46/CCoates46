@@ -2,7 +2,7 @@
 - 👀 I’m interested in singing, exercising and my family
 - 🌱 I’m currently learning Javasscript and Automation testing
 - 💞️ I’m looking to collaborate on Javascript 
-- 📫 How to reach me clare_coates7@yahoo.com
+- 📫 How to reach me clare_coates37@yahoo.com
 
 <!---
 CCoates46/CCoates46 is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
