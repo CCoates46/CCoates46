@@ -144,7 +144,7 @@ Person.hey()
  console.log(account.latest)
  account.latest = 50
  console.log(account.movements)
- */
+ 
 
  //Object.create method
 
@@ -156,3 +156,9 @@ Person.hey()
 
  const steven = Object.create(PersonProto)
  console.log(steven)
+ steven.name = 'Steven'
+ steven.birthYear = 1990
+ steven.calcAge()
+
+ console.log(steven.__proto__)
+ */
