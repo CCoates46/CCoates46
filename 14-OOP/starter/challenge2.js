@@ -11,7 +11,7 @@
 //Test data:
 //§ Data car 1: 'Ford' going at 120 km/h
 
-
+/*
 class CarCl {
     constructor(make, speed) {
         this.make = make
@@ -49,6 +49,6 @@ car.speedUS
 car.brake()
 car.speedUS
 car.speedUS = 50
-
+*/
 
 
