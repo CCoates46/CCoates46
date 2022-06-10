@@ -16,7 +16,7 @@ car's speed by 20, and decrease the charge by 1%.
 Test data:
 
 § Data car 1: 'Tesla' going at 120 km/h, with a charge of 23%
-*/
+
 
 const Car = function(make, speed) {
     this.make = make
@@ -59,3 +59,4 @@ car1.accelerate()
 car1.accelerate()
 car1.chargeBattery(100)
 car1.accelerate()
+*/
