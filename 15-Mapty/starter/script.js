@@ -61,6 +61,7 @@ const inputDistance = document.querySelector('.form__input--distance');
 const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
+const editButton = document.querySelector('.edit__btn')
 
 class App {
     #map
@@ -71,13 +72,14 @@ class App {
     constructor() {
         this._getPosition()
 
-        //Get Data from llocal Storage
+        //Get Data from local Storage
         this._getLocalStorage()
 
         //attach event handlers
         form.addEventListener('submit', this._newWorkout.bind(this))
         inputType.addEventListener('change', this._toggleElevationField)
         containerWorkouts.addEventListener('click', this._moveToPopup.bind(this))
+        editButton.addEventListener('click', this._editForm.bind(this))
     }
     _getPosition() {
         if (navigator.geolocation)
@@ -264,6 +266,7 @@ class App {
             },
           });
     }
+
     _setLocalStorage() {
         localStorage.setItem('workouts', JSON.stringify(this.#workouts));
       }
