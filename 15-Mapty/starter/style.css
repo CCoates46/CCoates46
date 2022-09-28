@@ -171,15 +171,6 @@ a:visited {
   display: none;
 }
 
-.edit__btn {
-  display: flex;
-  font-size: 1.3rem;
-  width: 13%;
-  padding: 5px 5px;
-  background-color:#00c46a;
-  color: #ececec;
-}
-
 
 .copyright {
   margin-top: auto;

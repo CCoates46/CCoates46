@@ -61,7 +61,6 @@ const inputDistance = document.querySelector('.form__input--distance');
 const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
-const editButton = document.querySelector('.edit__btn')
 
 class App {
     #map
@@ -79,7 +78,7 @@ class App {
         form.addEventListener('submit', this._newWorkout.bind(this))
         inputType.addEventListener('change', this._toggleElevationField)
         containerWorkouts.addEventListener('click', this._moveToPopup.bind(this))
-        editButton.addEventListener('click', this._editForm.bind(this))
+        containerWorkouts.addEventListener('click', this._editForm.bind(this))
     }
     _getPosition() {
         if (navigator.geolocation)
@@ -282,6 +281,30 @@ class App {
           this._renderWorkout(workout);
         });
     };
+
+    _editForm(e) {
+        if (!this.#map) return
+        // click on workout in sidebar
+        const indWork = e.target.closest('.workout')
+        console.log(indWork)
+
+        if(!indWork) return
+
+        // get workout from array
+
+        const workout = this.#workouts.find(
+            work => work.id === indWork.dataset.id
+          );
+
+        workout.classList.remove('form__hidden')
+       
+
+        
+        // open form
+        // focus on distance
+        // push amended workout back to array
+        //render the workout in sidebar
+    }
 
 reset() {
     localStorage.removeItem('workouts')
