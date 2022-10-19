@@ -30,11 +30,17 @@ const renderSpinner = function (parentEl) {
 
 const showRecipe = async function() {
   try {
+    // get the ID from the url and remove the # symbol from in front to enable
+    // it to be dynamic
+    const id = window.location.hash.slice(1)
+
+    // guard clause
+    if(!id) return
+
     // 1) Loading recipe
     renderSpinner(recipeContainer)
     const res = await fetch(
-      //'https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bc886'
-      'https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bca3b'
+      `https://forkify-api.herokuapp.com/api/v2/recipes/${id}`
       )
       const data = await res.json()
 
@@ -151,4 +157,8 @@ const showRecipe = async function() {
   }
 }
 
-showRecipe()
+// create an array to handle multiple eventlistener events
+const events = ['hashchange', 'load']
+events.forEach(ev => window.addEventListener(ev, showRecipe))
+// window.addEventListener('hashchange', showRecipe)
+// window.addEventListener('load', showRecipe)
